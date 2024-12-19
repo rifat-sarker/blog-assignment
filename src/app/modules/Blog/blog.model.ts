@@ -6,7 +6,7 @@ const blogSchema = new Schema<TBlog>(
     title: {
       type: String,
       required: [true, 'Title is required'],
-      unique: true,
+      // unique: true,
     },
     content: {
       type: String,

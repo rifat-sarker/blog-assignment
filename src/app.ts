@@ -11,4 +11,5 @@ app.use(cors({ origin: ['http://localhost:5173'] }));
 // application routes
 app.use('/api', router);
 
+
 export default app;

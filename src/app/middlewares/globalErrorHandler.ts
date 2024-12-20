@@ -11,8 +11,8 @@ import AppError from '../errors/AppError';
 import handleCastError from '../errors/handleCastError';
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  let statusCode = 500;
-  let message = 'Something went wrong!!!';
+  let statusCode = 400;
+  let message = 'Error message describing the issue';
   let errorSources: TErrorSources = [
     {
       path: '',
@@ -59,10 +59,11 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     ];
   }
 
-  // ultimate return
+  // common response
   res.status(statusCode).json({
     success: false,
     message,
+    statusCode,
     errorSources,
     err,
     stack: config.NODE_ENV === 'development' ? err?.stack : null,

@@ -1,9 +1,9 @@
 import { model, Schema } from 'mongoose';
-import { TUser } from './user.interface';
+import { IUser } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 
-const userSchema = new Schema<TUser>({
+const userSchema = new Schema<IUser>({
   name: {
     type: String,
     required: true,
@@ -12,6 +12,13 @@ const userSchema = new Schema<TUser>({
     type: String,
     unique: true,
     required: true,
+    validate: {
+      validator: function (value: string) {
+        return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value);
+      },
+      message: '{VALUE} is not a valid email',
+    },
+    immutable: true,
   },
   password: {
     type: String,
@@ -46,4 +53,4 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
-export const User = model<TUser>('User', userSchema);
+export const User = model<IUser>('User', userSchema);

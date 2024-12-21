@@ -5,7 +5,7 @@ import { TBlog } from './blog.interface';
 import { Blog } from './blog.model';
 
 const createBlogIntoDB = async (payload: TBlog) => {
-  const result = await Blog.create(payload);
+  const result = (await Blog.create(payload)).populate('author')
   return result;
 };
 
@@ -27,10 +27,9 @@ const updateBlogFromDB = async (id: string, payload: Partial<TBlog>) => {
 };
 
 const deleteBlogFromDB = async (id: string) => {
-  const result = await Blog.findByIdAndUpdate(
+  const result = await Blog.findByIdAndDelete(
     id,
     { isPublished: false },
-    { new: true },
   );
   return result;
 };

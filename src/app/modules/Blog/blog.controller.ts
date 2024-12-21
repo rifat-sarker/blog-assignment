@@ -1,14 +1,36 @@
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
+import { TBlog } from './blog.interface';
 import { BlogServices } from './blog.service';
 
 const createBlog = catchAsync(async (req, res) => {
-  const result = await BlogServices.createBlogIntoDB(req.body);
+  const { title, content } = req.body;
+  const user = req.user;
+
+  const blogData :TBlog = {
+    title,
+    content,
+    author: user._id, 
+  };
+
+  // Save the blog in the database
+  const blog = await BlogServices.createBlogIntoDB(blogData);
+  const responseData = {
+    _id: blog._id,
+    title: blog.title,
+    content: blog.content,
+    author: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  };
   sendResponse(res, {
     success: true,
     message: 'Blog created succesfully',
     statusCode: 201,
-    data: result,
+    data: responseData,
   });
 });
 

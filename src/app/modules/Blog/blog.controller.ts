@@ -1,16 +1,18 @@
+import AppError from '../../errors/AppError';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { TBlog } from './blog.interface';
+import { Blog } from './blog.model';
 import { BlogServices } from './blog.service';
 
 const createBlog = catchAsync(async (req, res) => {
   const { title, content } = req.body;
   const user = req.user;
 
-  const blogData :TBlog = {
+  const blogData: TBlog = {
     title,
     content,
-    author: user._id, 
+    author: user._id,
   };
 
   // Save the blog in the database
@@ -46,7 +48,9 @@ const getAllBlogs = catchAsync(async (req, res) => {
 });
 
 const updateBlog = catchAsync(async (req, res) => {
+  // console.log(req.user);
   const { id } = req.params;
+
   const result = await BlogServices.updateBlogFromDB(id, req.body);
   sendResponse(res, {
     success: true,
@@ -58,6 +62,7 @@ const updateBlog = catchAsync(async (req, res) => {
 
 const deleteBlog = catchAsync(async (req, res) => {
   const { id } = req.params;
+
   await BlogServices.deleteBlogFromDB(id);
   sendResponse(res, {
     success: true,

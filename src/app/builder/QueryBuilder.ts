@@ -24,18 +24,6 @@ class QueryBuilder<T> {
     return this;
   }
 
-  //   filter() {
-  //     const queryObj = { ...this.query }; //copy
-
-  //     // filetering
-  //     const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
-  //     excludeFields.forEach((el) => delete queryObj[el]);
-
-  //     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
-
-  //     return this;
-  //   }
-
   sortBy() {
     const sortBy =
       (this?.query?.sortBy as string)?.split(',')?.join(' ') || '-createdAt';
@@ -63,6 +51,7 @@ class QueryBuilder<T> {
     this.modelQuery = this.modelQuery.select(fields);
     return this;
   }
+  
 }
 
 export default QueryBuilder;

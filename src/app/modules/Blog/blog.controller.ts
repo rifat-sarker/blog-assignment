@@ -1,8 +1,6 @@
-import AppError from '../../errors/AppError';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { TBlog } from './blog.interface';
-import { Blog } from './blog.model';
 import { BlogServices } from './blog.service';
 
 const createBlog = catchAsync(async (req, res) => {

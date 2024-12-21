@@ -8,7 +8,7 @@ import { createToken } from './auth.utils';
 import config from '../../config';
 
 const register = async (payload: IUser) => {
-//   payload.role = 'admin';
+  //   payload.role = 'admin';
   const result = await User.create(payload);
   return result;
 };

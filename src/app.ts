@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import router from './app/routes';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import notFound from './app/middlewares/notFound';
@@ -15,6 +15,10 @@ app.use('/api', router);
 
 app.use(globalErrorHandler);
 
-app.use(notFound)
+app.get('/', (req: Request, res: Response) => {
+  res.send('Welcome to Blog Website');
+});
+
+app.use(notFound);
 
 export default app;
